@@ -10,10 +10,13 @@ def bfs(graph, start, visited):
 
         for i in graph[v]:
             if not visited[i]:
+                answer.append(i)
                 queue.append(i)
                 visited[i] = True
 
 start = 1
+
+answer = [start]
 
 graph = [
     [],
@@ -30,3 +33,4 @@ graph = [
 visited = [False] * len(graph)
 
 bfs(graph, start, visited)
+print(answer)
