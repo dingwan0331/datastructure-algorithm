@@ -1,7 +1,7 @@
 # 탐색알고리즘 DFS/BFS
 
-- DFS: 깊이 우선탐색
-- BFS: 넓이 우선탁색
+- DFS(Depth First Search): 깊이 우선탐색
+- BFS(Bredth First Search): 넓이 우선탐색
 
 # 탐색 알고리즘에서 표현하는방법
 
