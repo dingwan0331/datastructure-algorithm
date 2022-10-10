@@ -1,7 +1,16 @@
-# 탐색알고리즘 DFS/BFS
+# DFS - Depth First Search (깊이 우선 탐색)
 
-- DFS(Depth First Search): 깊이 우선탐색
-- BFS(Bredth First Search): 넓이 우선탐색
+## 구현코드
+
+1. 재귀 형태
+
+## 깊이 우선 탐색이란?
+
+깊은부분(먼곳)을 먼저 탐색하는 탐색 방법을 의미합니다.
+
+## 코드 동작과정
+
+우선
 
 ## 탐색 알고리즘에서 표현하는방법
 
