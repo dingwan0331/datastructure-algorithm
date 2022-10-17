@@ -1,122 +1,90 @@
-## Tree란?
+# Heap 이란?
 
-자료구조의 데이터 저장형태가 나무처럼 형성된 자료 구조
-
-시작점을 의미하는 Root노드에서 아래로 나무 가지 처럼 뻗아나가는 구조입니다.
-
-가지를 치는 규칙에 따라 다양한 종류의 Tree가 정의됩니다.
-
-## Tree자료구조 종류
-
-- binary search tree (이진검색트리)
-
-- heap tree
-
-  - max heap, min heap으로도 나뉩니다.
-
-- balance tree(균형 이진 트리)
-
-  - B-tree로 표현되며 MySQL의 인덱스 자료구조로 유명합니다.
-
-- red-balck tree
-
-- BinaryTree(이진트리)
-  - 자식노드가 최대 2개인 트리 자료구조를 말합니다.
-
-## Tree에서 사용되는 용어들
-
-<img width="846" alt="image" src="https://user-images.githubusercontent.com/100751719/194826465-ce105393-3b75-4793-986f-63089c678acb.png">
-
-- Root(Root Node): 부모가 없는 최상위 노드, 일반적으로 Tree 자료구조의 시작점
-- Level: 트리에서 같은 깊이를 가지는 노드의 집합
-- Depth: 루트에서 특정 노드까지의 경로의 개수(일반적으로 level과 동일합니다)
-- Height: 이름 그대로 트리의 높이 루트에서 가장 끝의 leaf Node까지의 길이
-- Parent Node: 어떤 특정노드의 상위노드
-- Child Node: 어떤 특정노드의 하위 노드
-- Sibling Node: 어떤 특정노드와 같은 level의 노드
-- Leaf Node: Tree의 가장 끝 부분에 있는노드, 즉 자식이 없는 노드
-- Sub Tree: Tree의 속해있는 하위트리. 하위 노드가아닌 하위 노드를 루트로 하는 트리를 의미
-
-## BinaryTree 자료구조 표현법 3가지
-
-<img width="407" alt="image" src="https://user-images.githubusercontent.com/100751719/194828497-81c094a6-9c6c-486e-b53e-2f990e9a63a2.png">
-
+우선순위 큐를 위해 만들어진 자료구조이다.
 <br>
+여러 개의 값 중에서 가장 크거나 작은 값을 빠르게 찾기 위해 만든 이진 트리
 
-### 1. list표현법
+- Root노드가 최대값인 힙 = 최대힙, max heap
+- Root노드가 최소값인 힙 = 최소힙, min heap
 
-level 0부터 위에서 아래로 왼쪽에서 오른쪽으로 순차적으로 리스트에 Insert한다
+(이글은 max heap을 기준으로 합니다.)
 
-값이 없더라도 None으로 처리한다
+# Heap의 특징
 
-위에 예제 사진을 list로 표현하면 다음과같다
+1. 루트노드는 가장 큰 값이 들어 있습니다.
+2. 중복값을 허용합니다.
+3. 최대값을 O(1)시간내에 읽기, 삭제 연산을 제공합니다.
 
-```
-[A, B, C, D, E, F, G, H, I, J, None, None, None, None, None]
-```
+# Heap의 조건
 
-만약 예제사진에서 G노드가 없다면?
+1. 완전이진트리 형태를 띄어야 한다.
+2. 부모노드는 자식노드보다 작거나 같아야 합니다.
 
-```
-[A, B, C, D, E, F, None, H, I, J, None, None, None, None, None]
-```
+# Heap의 관계노드 구하는법
 
-상위노드가 없더라도 모두 None으로 처리하여 표현한다
-<br><br>
+## 부모노드
 
-### 2. 다차원 list표현법
+H = Heap 배열
 
-부모노드와 노드와 자식 2개의 노드를 1개의 리스트로 표현한다 <br>
-자식이 공백인경우는 빈 list로 표현한다.
-
-ex) Root Node가 2이고 왼쪽자식이 1 오른쪽 자식이 2인경우 아래와 같이 표현할 수 있다.
+k = 본인의 index
 
 ```
-[2,
-  [
-    1,[],[]
-  ],
-  [
-    3,[],[]
-  ]
-]
+H[ (k - 1) // 2 ]
 ```
 
-예제 사진 표현해보기
+## 자식노드
+
+왼쪽
 
 ```
-[
-  A,[
-    B,[
-      D,[
-        H,[],[]
-      ],
-      [
-        I,[],[]
-      ]
-.....
-      ]
-    ]
-  ]
-]
+H[ 2 * k + 1]
 ```
 
-굉장히 복잡하고 길게 형성이됩니다.<br>
-
-### 3.클래스 표현법
+오른족
 
 ```
-class Node:
-    def __init__(self):
-        self.key = None
-        self.value = None
-        self.parents = None
-        self.left = None
-        self.right = None
+H[ 2 * k + 2]
 ```
 
-Node는 트리중 하나의 구성요소를 의미합니다.
+# 무작위 배열에서 Heap만들기
 
-parents는 상위노드 or 부모노드를 의미합니다.
+## make-heap
 
-left는 왼쪽 자식노드, right는 오른쪽 자식 노드를 의미합니다.
+마지막 인덱스부터 루트 인덱스 까지 반복하면서 heapify-down을 반복하는것
+
+```
+# 슈도 코드
+def make_heap(A):
+    n = len(A)
+    for i in range(n-1,-1,-1):
+        #A[k] = heap성질을 만족하는 곳
+        heapify_down(A,k,n)
+```
+
+## heapify-down
+
+해당 노드와 두개의 자식노드를 하나의 트리로 하여 heap성질을 만족시키는 연산
+
+```
+# 슈도 코드
+def heapify_down(A,k,n):
+    while A[k] != reaf_node:
+        m = max_index(A[k], A[R], A[L])
+        if A[k] != m:
+            A[k] <-> A[m]
+        else:
+            break
+```
+
+노드가 리프노드이거나 혹은 heap성질을 만족할때까지 반복
+
+## 본 코드에서 제공하는 연산
+
+1. insert
+   - O(log n)
+2. find_max
+   - O(n)
+3. delete_max
+   - O(log n)
+4. make_haep
+5. heapify_down
