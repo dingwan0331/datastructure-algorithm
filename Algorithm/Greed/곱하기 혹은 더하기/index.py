@@ -5,6 +5,7 @@ def choose_plus_or_multiply(str):
         # 현재 계산된 값혹인 이제 계산할값이 1보다 작거나 같으면 + 연산
         if answer <= 1 or int(i) <= 1:
             answer += int(i)
+        # 아닌경우 * 연산
         else:
             answer *= int(i)  
     return answer      
