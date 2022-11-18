@@ -3,5 +3,3 @@ def gcd(max_num, min_num):
         return min_num
 
     return gcd(min_num, max_num % min_num )
-
-print(gcd(192,162))

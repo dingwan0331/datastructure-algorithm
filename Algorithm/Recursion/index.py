@@ -1,8 +1,5 @@
-def gcd(a,b):
-    min_num, max_num = min(a,b), max(a,b)
-
-    if max_num % min_num == 0:
-        return max_num
-    return gcd(min_num, max_num % min_num )
-
-print(gcd(11,10))
+def factorial(n):
+    if n == 1 or n == 0:
+        return 1
+    
+    return n * factorial(n-1)
